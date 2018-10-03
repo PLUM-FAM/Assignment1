@@ -8,19 +8,40 @@ public class Driver
 	{
 		MazeReader reader = new MazeReader();
 
-		String[][] openMaze = reader.readOpen();
+		char[][] openMaze = reader.readMaze("open maze.txt");
 		for(int i = 0; i < 20; i++)
 		{
-			for(int j = 0; j < 37; i++)
+			for(int j = 0; j < 37; j++)
 			{
-				System.out.println(openMaze[i][j]);
+				System.out.print(openMaze[i][j]);// create a new instance of node for each .
 			}
+			System.out.println("");
 		}
 		
-		String[][] mediumMaze = reader.readMedium();
+		reader = new MazeReader();
 		
-		String[][] largeMaze = reader.readLarge();
+		char[][] mediumMaze = reader.readMaze("medium maze.txt");
+		for(int i = 0; i < 23; i++)
+		{
+			for(int j = 0; j < 61; j++)
+			{
+				System.out.print(mediumMaze[i][j]);
+			}
+			System.out.println("");
+
+		}
 		
+		reader = new MazeReader();
+		char[][] largeMaze = reader.readMaze("large maze.txt");
+		for(int i = 0; i < 31; i++)
+		{
+			for(int j = 0; j < 81; j++)
+			{
+				System.out.print(largeMaze[i][j]);//
+			}
+			System.out.println("");
+
+		}		
 		
 	}
 
