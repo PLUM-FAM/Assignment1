@@ -8,8 +8,6 @@ public class MazeReader
 {
 	public char[][] readMaze(String filename)
 	{
-	
-	
 			char[][] maze;
 			int width;
 			int height;
@@ -52,80 +50,5 @@ public class MazeReader
 			}
 			return maze;
 	}
-	
-//	public char[][] readOpen()
-//	{
-//		char[][] openMaze = new char[20][37];
-//		try
-//		{
-//			Scanner in = new Scanner(new FileReader("open maze.txt"));
-//			for(int i = 0; i < 20; i++)
-//			{
-//				String line = in.next();
-//
-//				for(int j = 0; j < 37; j++)
-//				{
-//					openMaze[i][j] = line.charAt(j);
-//					//System.out.println(line.charAt(j));
-//				}
-//			}
-//		}
-//		catch(IOException e)
-//		{
-//			System.out.println("Error reading file");
-//		}
-//		return openMaze;
-//	}
-//	
-//	public char[][] readMedium()
-//	{
-//		char[][] mediumMaze = new char[23][61];
-//		try
-//		{
-//			Scanner in = new Scanner(new FileReader("open maze.txt"));
-//			for(int i = 0; i < 23; i++)
-//			{
-//				String line = in.next();
-//
-//				for(int j = 0; j < 61; j++)
-//				{
-//					mediumMaze[i][j] = line.charAt(j);
-//					//System.out.println(line.charAt(j));
-//				}
-//			}
-//		}
-//		catch(IOException e)
-//		{
-//			System.out.println("Error reading file");
-//		}
-//		return mediumMaze;
-//	}
-//	
-//	public char[][] readLarge()
-//	{
-//		char[][] largeMaze = new char[31][81];
-//		try
-//		{
-//			Scanner in = new Scanner(new FileReader("open maze.txt"));
-//			for(int i = 0; i < 31; i++)
-//			{
-//				String line = in.next();
-//
-//				for(int j = 0; j < 81; j++)
-//				{
-//					largeMaze[i][j] = line.charAt(j);
-//					//System.out.println(line.charAt(j));
-//				}
-//			}
-//		}
-//		catch(IOException e)
-//		{
-//			System.out.println("Error reading file");
-//		}
-//		return largeMaze;
-//	}
-	
-	
-	
 	
 }
