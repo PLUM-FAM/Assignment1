@@ -31,28 +31,6 @@ public class Driver
 				//figure out start & finish state for open maze
 				if(openMaze[i][j] == 'P')//start
 				{
-					openMazeStartx =i;
-					openMazeStarty = j;
-				}
-				if(openMaze[i][j] == '*')//finish
-				{
-					openMazeFinishx =i;
-					openMazeFinishy =j;
-				}
-				
-			}
-			//System.out.println("");
-		}
-
-		for(int i = 0; i < 20; i++)
-		{
-			for(int j = 0; j < 37; j++)
-			{
-				System.out.print(openMaze[i][j]);
-				
-				//figure out start & finish state for open maze
-				if(openMaze[i][j] == 'P')//start
-				{
 					openMazeStartx =j;
 					openMazeStarty = i;
 				}
@@ -63,10 +41,11 @@ public class Driver
 				}
 				
 			}
-			System.out.println("");
+			//System.out.println("");
 		}
 		
 		System.out.println(openMazeStartx + " " + openMazeStarty);
+		
 		Node n = bfs(openMaze, 37,20, openMazeStartx, openMazeStarty);
 		
 		for(int i = 0; i < 20; i++)
@@ -154,7 +133,7 @@ public class Driver
             }
              
              
-             //print maze for testing
+             //print maze each time for testing
              for(int i = 0; i < 20; i++)
      		{
      			for(int j = 0; j < 37; j++)
@@ -175,7 +154,9 @@ public class Driver
 		
     	if((x >= 0 && x < mxbound) && (y >= 0 && y < mybound)){
     			if((m[y][x] == '.' || m[y][x] == '*')) {
+    				System.out.println("return true");
     				return true;
+    				
     			}
         }
         return false;
