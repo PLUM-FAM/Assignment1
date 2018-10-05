@@ -116,7 +116,7 @@ public class Driver
 		
 	public static Node bfs(char[][] m, int x, int y)
 	{
-		System.out.println("in bfs");
+		//System.out.println("in bfs");
 		q.add(new Node(x, y, null));
 
         while(!q.isEmpty()) {
@@ -129,25 +129,25 @@ public class Driver
 
             if(isFree(m, p.getX()+1,p.getY())) 
             {
-                m[p.getX()][p.getY()] = '*';
+                m[p.getY()][p.getX()] = 'o';
                 Node nextP = new Node(p.getX()+1,p.getY(), p);
                 q.add(nextP);
             }
 
             if(isFree(m, p.getX()-1,p.getY())) {
-                m[p.getX()][p.getY()] = '*';
+                m[p.getY()][p.getX()] = 'o';
                 Node nextP = new Node(p.getX()-1,p.getY(), p);
                 q.add(nextP);
             }
 
             if(isFree(m, p.getX(),p.getY()+1)) {
-                m[p.getX()][p.getY()] = '*';
+                m[p.getY()][p.getX()] = 'o';
                 Node nextP = new Node(p.getX(),p.getY()+1, p);
                 q.add(nextP);
             }
 
              if(isFree(m, p.getX(),p.getY()-1)) {
-                m[p.getX()][p.getY()] = '*';
+                m[p.getY()][p.getX()] = 'o';
                 Node nextP = new Node(p.getX(),p.getY()-1, p);
                 q.add(nextP);
             }
@@ -156,9 +156,11 @@ public class Driver
     }
 	
     public static boolean isFree(char[][] m ,int x, int y) {
-		System.out.println("in isfree" + x + " " + y);
-
-        if((x >= 0 && x < m.length) && (y >= 0 && y < m[x].length) && (m[x][y] == '.' || m[x][y] == 'P')) {
+//		System.out.println("in isfree => x: " + x + " y: " + y);
+//		System.out.println(m[y][x]);
+		
+		
+        if((x >= 0 && x < 37 /*m.length*/) && (y >= 0 && y < 20 /*m[x].length*/) && (m[y][x] == '.' || m[y][x] == 'P')) {
             return true;
         }
         return false;
