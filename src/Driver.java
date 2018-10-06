@@ -6,10 +6,21 @@ public class Driver
 {	
 	
 	public static Queue<Node> q = new LinkedList<Node>();
+	
 	public static int openMazeStartx;
 	public static int openMazeStarty;
 	public static int openMazeFinishx;
 	public static int openMazeFinishy;
+	
+	public static int mediumMazeStartx;
+	public static int mediumMazeStarty;
+	public static int mediumMazeFinishx;
+	public static int mediumMazeFinishy;
+	
+	public static int largeMazeStartx;
+	public static int largeMazeStarty;
+	public static int largeMazeFinishx;
+	public static int largeMazeFinishy;
 	
 	static char[][] openMaze;
 	static char[][] mediumMaze;
@@ -20,16 +31,18 @@ public class Driver
 	
 	public static void main(String args[])
 	{
-		MazeReader reader = new MazeReader();
+		/*
+		 * ************************************
+		 * OPEN MAZE BFS 
+		 * ************************************
+		 */
 		
-
+		MazeReader reader = new MazeReader();
 		openMaze = reader.readMaze("open maze.txt");
 		for(int i = 0; i < 20; i++)
 		{
 			for(int j = 0; j < 37; j++)
-			{
-				//System.out.print(openMaze[i][j]);
-				
+			{	
 				//figure out start & finish state for open maze
 				if(openMaze[i][j] == 'P')//start
 				{
@@ -40,59 +53,103 @@ public class Driver
 				{
 					openMazeFinishx =j;
 					openMazeFinishy =i;
-				}
-				
+				}	
 			}
-			//System.out.println("");
 		}
 		
-		
 		Node n = bfs(openMaze, 37,20, openMazeStartx, openMazeStarty);
-		
 		for(int i = 0; i < 20; i++)
 		{
 			for(int j = 0; j < 37; j++)
 			{
 				System.out.print(openMaze[i][j]);
-				
 			}
 			System.out.println("");
 		}
-		
-		System.out.println("End of BFS: Cost = " + bfsCost);
-		
-		//reset maze after bfs
-
-
+		System.out.println("End of BFS - Cost for open maze.txt = " + bfsCost);
 		
 		
-//		reader = new MazeReader();
-//		
-//		mediumMaze = reader.readMaze("medium maze.txt");
-//		for(int i = 0; i < 23; i++)
-//		{
-//			for(int j = 0; j < 61; j++)
-//			{
-//				System.out.print(mediumMaze[i][j]);
-//			}
-//			System.out.println("");
-//
-//		}
-//		
-//		reader = new MazeReader();
-//		largeMaze = reader.readMaze("large maze.txt");
-//		for(int i = 0; i < 31; i++)
-//		{
-//			for(int j = 0; j < 81; j++)
-//			{
-//				System.out.print(largeMaze[i][j]);//
-//			}
-//			System.out.println("");
-//
-//		}		
-//		
-//	}
+		/*
+		 * ************************************
+		 * MEDIUM MAZE BFS 
+		 * ************************************
+		 */
+		
+		reader = new MazeReader();
+		mediumMaze = reader.readMaze("medium maze.txt");
+		for(int i = 0; i < 23; i++)
+		{
+			for(int j = 0; j < 61; j++)
+			{	
+				//figure out start & finish state for open maze
+				if(mediumMaze[i][j] == 'P')//start
+				{
+					mediumMazeStartx =j;
+					mediumMazeStarty = i;
+				}
+				if(mediumMaze[i][j] == '*')//finish
+				{
+					mediumMazeFinishx =j;
+					mediumMazeFinishy =i;
+				}	
+			}
+		}
+		
+		Node m = bfs(mediumMaze, 61,23, mediumMazeStartx, mediumMazeStarty);
+		for(int i = 0; i < 23; i++)
+		{
+			for(int j = 0; j < 61; j++)
+			{
+				System.out.print(mediumMaze[i][j]);
+			}
+			System.out.println("");
+		}
+		System.out.println("End of BFS - Cost for medium maze.txt = " + bfsCost);
+		
+		
+		/*
+		 * ************************************
+		 * LARGE MAZE BFS 
+		 * ************************************
+		 */
+		
+		reader = new MazeReader();
+		largeMaze = reader.readMaze("large maze.txt");
+		for(int i = 0; i < 31; i++)
+		{
+			for(int j = 0; j < 81; j++)
+			{	
+				//figure out start & finish state for open maze
+				if(largeMaze[i][j] == 'P')//start
+				{
+					largeMazeStartx =j;
+					largeMazeStarty = i;
+				}
+				if(largeMaze[i][j] == '*')//finish
+				{
+					largeMazeFinishx =j;
+					largeMazeFinishy =i;
+				}	
+			}
+		}
+		
+		Node o = bfs(largeMaze, 81, 31, largeMazeStartx, largeMazeStarty);
+		for(int i = 0; i < 31; i++)
+		{
+			for(int j = 0; j < 81; j++)
+			{
+				System.out.print(largeMaze[i][j]);
+			}
+			System.out.println("");
+		}
+		System.out.println("End of BFS - Cost for large maze.txt = " + bfsCost);
+		
+		//reset all mazes after BFS
+		openMaze = reader.readMaze("open maze.txt");
+		mediumMaze = reader.readMaze("medium maze.txt");
+		largeMaze = reader.readMaze("large maze.txt");
 	}
+	
 		
 		
 	public static Node bfs(char[][] m, int mxbound, int mybound, int x, int y)
@@ -180,6 +237,7 @@ public class Driver
 //     		}
              //end print maze for testing
         }
+        
         return null;
 	}
 	
