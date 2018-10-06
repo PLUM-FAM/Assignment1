@@ -160,9 +160,6 @@ public class Driver
 		resetMazes(reader);
 	}
 
-
-
-
 	private static void getStartandFinish() {
 		
 		// finding open maze start and finish coordinates
@@ -224,9 +221,6 @@ public class Driver
 			}
 		}
 	}
-
-
-
 
 	private static void resetMazes(MazeReader reader) {
 		openMaze = reader.readMaze("open maze.txt");
