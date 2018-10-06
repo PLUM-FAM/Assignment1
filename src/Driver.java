@@ -96,6 +96,7 @@ public class Driver
 		
 	public static Node bfs(char[][] m, int mxbound, int mybound, int x, int y)
 	{
+		bfsCost = 0; //reset cost for new instance
 		
 		q.add(new Node(x, y, null));
 
