@@ -28,7 +28,8 @@ public class Driver
 	static char[][] largeMaze;
 	
 	static int bfsCost = 0;
-	static int dfsCost = 0;
+	static int dfsNodesExpanded = 0;
+	static int dfsPathCost = 0;
 	static int greedyCost = 0;
 	static int astarCost = 0;
 	
@@ -116,8 +117,8 @@ public class Driver
 			}
 			System.out.println("");
 		}
-		System.out.println("End of DFS - Cost for open maze.txt = " + dfsCost + "\n");
-		
+		System.out.println("End of DFS - Nodes Expanded for open maze.txt = " + dfsNodesExpanded);
+		System.out.println("             Path Cost for open maze.txt = " + dfsPathCost + "\n");
 		
 
 		/*
@@ -135,8 +136,8 @@ public class Driver
 			}
 			System.out.println("");
 		}
-		System.out.println("End of DFS - Cost for medium maze.txt = " + dfsCost + "\n");
-		
+		System.out.println("End of DFS - Nodes Expanded for medium maze.txt = " + dfsNodesExpanded );
+		System.out.println("             Path Cost for medium maze.txt = " + dfsPathCost + "\n");
 		
 		/*
 		 * *********************************************************************
@@ -154,8 +155,8 @@ public class Driver
 			}
 			System.out.println("");
 		}
-		System.out.println("End of DFS - Cost for large maze.txt = " + dfsCost + "\n");
-		
+		System.out.println("End of DFS - Nodes Expanded for large maze.txt = " + dfsNodesExpanded );
+		System.out.println("             Path Cost for large maze.txt = " + dfsPathCost + "\n");
 		//reset all mazes after DFS
 		resetMazes(reader);
 	}
@@ -277,7 +278,8 @@ public class Driver
                 q.add(nextP);
                 bfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
-                    return nextP;//exit is reached
+                	System.out.println("Exit is reached!");
+                	return nextP;//exit is reached
                 }
                 m[nextP.getY()][nextP.getX()] = '.';
             }
@@ -299,19 +301,21 @@ public class Driver
 	
 	public static Node dfs(char[][] m, int mxbound, int mybound, int x, int y)
 	{
-		dfsCost = 0; //reset cost for new instance
+		dfsNodesExpanded = 0; //reset cost for new instance
+		dfsPathCost = 0;
 		
 		s.add(new Node(x, y, null));
 
         while(!s.isEmpty()) {
         	
             Node p = s.pop();
+            dfsPathCost++;
 
             if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) 
             {
                 Node nextP = new Node(p.getX()+1,p.getY(), p); //east
                 s.add(nextP);
-                bfsCost++;
+                dfsNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
                     System.out.println("Exit is reached!");
                     return nextP;
@@ -322,7 +326,7 @@ public class Driver
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) {
                 Node nextP = new Node(p.getX()-1,p.getY(), p); //west
                 s.add(nextP);
-                dfsCost++;
+                dfsNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
                     return nextP;
@@ -333,8 +337,9 @@ public class Driver
             if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) {
                 Node nextP = new Node(p.getX(),p.getY()+1, p); //south
                 s.add(nextP);
-                dfsCost++;
+                dfsNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
+                	System.out.println("Exit is reached!");
                     return nextP;//exit is reached
                 }
                 m[nextP.getY()][nextP.getX()] = '.';
@@ -343,7 +348,7 @@ public class Driver
              if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) {
                 Node nextP = new Node(p.getX(),p.getY()-1, p); //north
                 s.add(nextP);
-                dfsCost++;
+                dfsNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
                     return nextP;
