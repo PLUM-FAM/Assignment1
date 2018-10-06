@@ -230,7 +230,10 @@ public class Driver
 	}	
 	
 	
-	
+	/*
+	 * out breadth-first search method uses a queue data structure to keep track of visited nodes and uses a set of conditional statements to add valid
+	 * nodes to the current frontier.
+	 */
 		
 	public static Node bfs(char[][] m, int mxbound, int mybound, int x, int y)
 	{
@@ -240,59 +243,67 @@ public class Driver
 
         while(!q.isEmpty()) {
         	
-            Node p = q.remove();
+            Node p = q.remove(); //p is the current node/point that we are looking at. the frontier of p includes valid nodes to the east, west, south, and north of p.
 
             
-
-            if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) 
+            /* 
+             * this group of conditional statements checks the frontier in this order (east,west,south,north)
+             * for valid nodes to add to the queue.
+             */
+            if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) //east
             {
-                Node nextP = new Node(p.getX()+1,p.getY(), p); //east
+                Node nextP = new Node(p.getX()+1,p.getY(), p); 
                 q.add(nextP);
                 bfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';
+                m[nextP.getY()][nextP.getX()] = '.'; //mark where we have been.
             }
 
-            if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) {
-                Node nextP = new Node(p.getX()-1,p.getY(), p); //west
+            if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) { //west
+                Node nextP = new Node(p.getX()-1,p.getY(), p); 
                 q.add(nextP);
                 bfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
 
-            if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) {
-                Node nextP = new Node(p.getX(),p.getY()+1, p); //south
+            if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) { //south
+                Node nextP = new Node(p.getX(),p.getY()+1, p); 
                 q.add(nextP);
                 bfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                 	System.out.println("Exit is reached!");
                 	return nextP;//exit is reached
                 }
-                m[nextP.getY()][nextP.getX()] = '.';
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
 
-             if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) {
-                Node nextP = new Node(p.getX(),p.getY()-1, p); //north
+             if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) { //north
+                Node nextP = new Node(p.getX(),p.getY()-1, p); 
                 q.add(nextP);
                 bfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
 
         }
         return null;
 	}
 	
+	
+	/*
+	 * our depth first search uses a stack data structure to keep track of what nodes we are visiting through our search. It uses a similar method as BFS for
+	 * finding the frontier and adding valid nodes to it.
+	 */
 	public static Node dfs(char[][] m, int mxbound, int mybound, int x, int y)
 	{
 		dfsNodesExpanded = 0; //reset cost for new instance
@@ -302,58 +313,71 @@ public class Driver
 
         while(!s.isEmpty()) {
         	
-            Node p = s.pop();
-            dfsPathCost++;
+            Node p = s.pop(); //the current node (or point) that we are looking at is popped off of the stack 
+            
+            dfsPathCost++; //every time we move to another node the path cost is increased by 1.
 
-            if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) 
+            /* 
+             * this group of conditional statements checks the frontier in this order (east,west,south,north)
+             * for valid nodes to add to the stack.
+             */
+            if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) //east
             {
-                Node nextP = new Node(p.getX()+1,p.getY(), p); //east
+                Node nextP = new Node(p.getX()+1,p.getY(), p); 
                 s.add(nextP);
                 dfsNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
 
-            if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) {
-                Node nextP = new Node(p.getX()-1,p.getY(), p); //west
+            if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) //west
+            {
+                Node nextP = new Node(p.getX()-1,p.getY(), p); 
                 s.add(nextP);
                 dfsNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
 
-            if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) {
-                Node nextP = new Node(p.getX(),p.getY()+1, p); //south
+            if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) //south
+            {
+                Node nextP = new Node(p.getX(),p.getY()+1, p); 
                 s.add(nextP);
                 dfsNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                 	System.out.println("Exit is reached!");
                     return nextP;//exit is reached
                 }
-                m[nextP.getY()][nextP.getX()] = '.';
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
 
-             if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) {
-                Node nextP = new Node(p.getX(),p.getY()-1, p); //north
+             if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) //north
+             {
+                Node nextP = new Node(p.getX(),p.getY()-1, p); 
                 s.add(nextP);
                 dfsNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
         }
-        return null;
+        return null; //if no exit/goal state is found.
 	}
 	
-	
+	/*
+	 * The isFree method takes in a maze (2d character array) its x and y bounds, and an x and y coord of the current node to check. 
+	 *  It then checks if the coords are in bounds, and if the node at those coords is valid (i.e. is a 'o' or the finish state '*').
+	 *  it returns true if all of those are true.
+	 *  It returns false if the node being checked at coords x,y is out of bounds or is a wall (i.e. '%').
+	 */
     public static boolean isFree(char[][] m , int mxbound, int mybound, int x, int y) {
 		
     	if((x >= 0 && x < mxbound) && (y >= 0 && y < mybound))

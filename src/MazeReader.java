@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*
+ * The MazeReader class reads the lines and cols of a text file and outputs/returns a 2D array data structure of the maze for us to manipulate.
+ */
 public class MazeReader 
 {
 	public char[][] readMaze(String filename)
@@ -33,13 +36,13 @@ public class MazeReader
 			try {
 				Scanner in = new Scanner(new FileReader(filename));
 				System.out.println("");
-				for(int i = 0; i < width; i++)
+				for(int i = 0; i < width; i++)	//for each col.
 				{
-					String line = in.next();
+					String line = in.next();	//for each line
 		
 					for(int j = 0; j < height; j++)
 					{
-						maze[i][j] = line.charAt(j);
+						maze[i][j] = line.charAt(j); //the next spot in the 2d array is the next character in the text file.
 					}
 				}
 			}
