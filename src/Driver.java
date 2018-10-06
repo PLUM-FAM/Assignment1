@@ -15,6 +15,8 @@ public class Driver
 	static char[][] mediumMaze;
 	static char[][] largeMaze;
 	
+	static int bfsCost = 0;
+	
 	
 	public static void main(String args[])
 	{
@@ -44,7 +46,6 @@ public class Driver
 			//System.out.println("");
 		}
 		
-		System.out.println(openMazeStartx + " " + openMazeStarty);
 		
 		Node n = bfs(openMaze, 37,20, openMazeStartx, openMazeStarty);
 		
@@ -58,6 +59,7 @@ public class Driver
 			System.out.println("");
 		}
 		
+		System.out.println("End of BFS: Cost = " + bfsCost);
 		
 		//reset maze after bfs
 
@@ -99,62 +101,95 @@ public class Driver
 		q.add(new Node(x, y, null));
 
         while(!q.isEmpty()) {
+        	
             Node p = q.remove();
 
-            if (m[p.getY()][p.getX()] == '*') {
-                System.out.println("Exit is reached!");
-                return p;
-            }
-            System.out.println("Current node: " + p.getX() + ","+ p.getY() + " is " + openMaze[p.getY()][p.getX()] );
+            
+//            System.out.println("Current node: " + p.getX() + ","+ p.getY() + " is " + openMaze[p.getY()][p.getX()] );
 
             if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) 
             {
-                m[p.getY()][p.getX()] = 'o';
+                //m[p.getY()][p.getX()] = 'o';
                 Node nextP = new Node(p.getX()+1,p.getY(), p); //east
                 q.add(nextP);
+                bfsCost++;
+                if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
+                    System.out.println("Exit is reached!");
+                    return nextP;
+                }
+                m[nextP.getY()][nextP.getX()] = '.';
+                
+
+//                System.out.println("Added to queue: " + nextP.getX() + "," + nextP.getY());
             }
 
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) {
-                m[p.getY()][p.getX()] = 'o';
+                //m[p.getY()][p.getX()] = 'o';
                 Node nextP = new Node(p.getX()-1,p.getY(), p); //west
                 q.add(nextP);
+                bfsCost++;
+                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
+                    System.out.println("Exit is reached!");
+                    return nextP;
+                }
+                m[nextP.getY()][nextP.getX()] = '.';
+
+//                System.out.println("Added to queue: " + nextP.getX() + "," + nextP.getY());
+
             }
 
             if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) {
-                m[p.getY()][p.getX()] = 'o';
+                //m[p.getY()][p.getX()] = 'o';
                 Node nextP = new Node(p.getX(),p.getY()+1, p); //south
                 q.add(nextP);
+                bfsCost++;
+                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
+                    return nextP;//exit is reached
+                }
+                m[nextP.getY()][nextP.getX()] = '.';
+
+//                System.out.println("Added to queue: " + nextP.getX() + "," + nextP.getY());
+
             }
 
              if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) {
-                m[p.getY()][p.getX()] = 'o';
+                //m[p.getY()][p.getX()] = 'o';
                 Node nextP = new Node(p.getX(),p.getY()-1, p); //north
                 q.add(nextP);
+                bfsCost++;
+                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
+                    System.out.println("Exit is reached!");
+                    return nextP;
+                }
+                m[nextP.getY()][nextP.getX()] = '.';
+
+//                System.out.println("Added to queue: " + nextP.getX() + "," + nextP.getY());
+
             }
              
              
              //print maze each time for testing
-             for(int i = 0; i < 20; i++)
-     		{
-     			for(int j = 0; j < 37; j++)
-     			{
-     				System.out.print(openMaze[i][j]);
-     				
-     			}
-     			System.out.println("");
-     		}
+//             for(int i = 0; i < 20; i++)
+//     		{
+//     			for(int j = 0; j < 37; j++)
+//     			{
+//     				System.out.print(openMaze[i][j]);
+//     				
+//     			}
+//     			System.out.println("");
+//     		}
              //end print maze for testing
         }
         return null;
 	}
 	
     public static boolean isFree(char[][] m , int mxbound, int mybound, int x, int y) {
-		System.out.println("in isfree => x: " + x + " y: " + y);
-		System.out.println(m[y][x]);
+//		System.out.println("in isfree => x: " + x + " y: " + y);
+//		System.out.println(m[y][x]);
 		
     	if((x >= 0 && x < mxbound) && (y >= 0 && y < mybound)){
-    			if((m[y][x] == '.' || m[y][x] == '*')) {
-    				System.out.println("return true");
+    			if((m[y][x] == 'o' || m[y][x] == '*')) {
+//    				System.out.println("return true");
     				return true;
     				
     			}
