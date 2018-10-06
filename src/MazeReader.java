@@ -33,7 +33,6 @@ public class MazeReader
 			try {
 				Scanner in = new Scanner(new FileReader(filename));
 				System.out.println("");
-				System.out.println(filename);
 				for(int i = 0; i < width; i++)
 				{
 					String line = in.next();
