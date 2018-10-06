@@ -150,6 +150,17 @@ public class Driver
 		}
 		System.out.println("End of BFS - Cost for large maze.txt = " + bfsCost);
 		
+		Node p = greedy(openMaze, 37,20, openMazeStartx, openMazeStarty);
+		for(int i = 0; i < 20; i++)
+		{
+			for(int j = 0; j < 37; j++)
+			{
+				System.out.print(openMaze[i][j]);
+			}
+			System.out.println("");
+		}
+		System.out.println("End of Greedy - Cost for open maze.txt = " + greedyCost);
+		
 		//reset all mazes after BFS
 		openMaze = reader.readMaze("open maze.txt");
 		mediumMaze = reader.readMaze("medium maze.txt");
@@ -216,6 +227,51 @@ public class Driver
 
         }
         return null;
+	}
+	
+	/*
+	 * Needs to find the Manhattan Distance from the children of the current node to the finish point
+	 * The next node chosen should be the child with the shortest Manhattan Distance
+	 * 
+	 * TODO
+	 * 1.) Find a way to pass in finish point without hard-coding each maze's finish
+	 * 2.) Return the children as nodes
+	 * 3.) Find each child's Manhattan Distance
+	 * 4.) Compare and pick the shortest child
+	 */
+	public static Node greedy(char[][] m, int mxbound, int mybound, int x, int y)
+	{
+		greedyCost = 0;
+		int manhattanDistance = 0;
+		int finishx = 0;
+		int finishy = 0;
+		if(m == openMaze)
+		{
+			finishx = openMazeFinishx;
+			finishy = openMazeFinishy;
+		}
+		else if(m == mediumMaze)
+		{
+			finishx = mediumMazeFinishx;
+			finishy = mediumMazeFinishy;
+		}
+		else if(m == largeMaze)
+		{
+			finishx = largeMazeFinishx;
+			finishy = largeMazeFinishy;
+		}
+		else
+		{
+			System.out.println("Unknown maze");
+		}
+		manhattanDistance = findManhattan(x, y, finishx, finishy);
+		System.out.println("Manhattan Distance = " + manhattanDistance);
+		return null;
+	}
+	
+	public static int findManhattan(int currentNodex, int currentNodey, int finishx, int finishy)
+	{
+		return (Math.abs(currentNodex - finishx) + Math.abs(currentNodey - finishy));
 	}
 	
     public static boolean isFree(char[][] m , int mxbound, int mybound, int x, int y) {
