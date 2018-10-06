@@ -4,101 +4,131 @@ import java.io.*;
 
 public class Driver 
 {	
-	
+	//Queue created for BFS
 	public static Queue<Node> q = new LinkedList<Node>();
+	
+	// Stack created for DFS
 	public static Stack<Node> s = new Stack<>();
 	
+	//Start and finish coordinate variables for open maze
 	public static int openMazeStartx;
 	public static int openMazeStarty;
 	public static int openMazeFinishx;
 	public static int openMazeFinishy;
 	
+	//Start and finish coordinate variables for medium maze
 	public static int mediumMazeStartx;
 	public static int mediumMazeStarty;
 	public static int mediumMazeFinishx;
 	public static int mediumMazeFinishy;
 	
+	//Start and finish coordinate variables for large maze
 	public static int largeMazeStartx;
 	public static int largeMazeStarty;
 	public static int largeMazeFinishx;
 	public static int largeMazeFinishy;
 	
+	// Creating a double char array for all mazes 
 	static char[][] openMaze;
 	static char[][] mediumMaze;
 	static char[][] largeMaze;
 	
+	// path cost counter variable for BFS
 	static int bfsCost = 0;
+	
+	// DFS counter variables for nodes expanded and path cost 
 	static int dfsNodesExpanded = 0;
 	static int dfsPathCost = 0;
+	
+	// GREEDY path cost counter variable
 	static int greedyCost = 0;
+	
+	//ASTAR path cost counter variable
 	static int astarCost = 0;
 	
 	
 	public static void main(String args[])
 	{
+		// new MazeReader Instance named "reader"
 		MazeReader reader = new MazeReader();
 		
-		//Reading all maze files and getting initial values
+		//Reading all maze files and getting initial values using methods
 		resetMazes(reader);
 		getStartandFinish();
 		
-//		/*
-//		 * ************************************
-//		 * OPEN MAZE BFS 
-//		 * ************************************
-//		 */
-//		
-//		
-//		Node n = bfs(openMaze, 37,20, openMazeStartx, openMazeStarty);
-//		for(int i = 0; i < 20; i++)
-//		{
-//			for(int j = 0; j < 37; j++)
-//			{
-//				System.out.print(openMaze[i][j]);
-//			}
-//			System.out.println("");
-//		}
-//		System.out.println("End of BFS - Cost for open maze.txt = " + bfsCost);
-//		
-//		
-//
-//		/*
-//		 * ************************************
-//		 * MEDIUM MAZE BFS 
-//		 * ************************************
-//		 */
-//		
-//		Node m = bfs(mediumMaze, 61,23, mediumMazeStartx, mediumMazeStarty);
-//		for(int i = 0; i < 23; i++)
-//		{
-//			for(int j = 0; j < 61; j++)
-//			{
-//				System.out.print(mediumMaze[i][j]);
-//			}
-//			System.out.println("");
-//		}
-//		System.out.println("End of BFS - Cost for medium maze.txt = " + bfsCost);
-//		
-//		
-//		/*
-//		 * ***********************************************************************
-//		 * LARGE MAZE BFS 
-//		 * ***********************************************************************
-//		 */
-//		
-//		
-//		Node o = bfs(largeMaze, 81, 31, largeMazeStartx, largeMazeStarty);
-//		for(int i = 0; i < 31; i++)
-//		{
-//			for(int j = 0; j < 81; j++)
-//			{
-//				System.out.print(largeMaze[i][j]);
-//			}
-//			System.out.println("");
-//		}
-//		System.out.println("End of BFS - Cost for large maze.txt = " + bfsCost);
+		/*
+		 * ******************************************************************************
+		 * OPEN MAZE BFS 
+		 * ******************************************************************************
+		 */
 		
-//		resetMazes(reader);
+		// calling BFS method and setting the return value to node n
+		// passing in the current maze, the dimensions of the current maze, and the starting coordinates
+		Node n = bfs(openMaze, 37,20, openMazeStartx, openMazeStarty);
+		
+		// nested for loop to print out the new maze with the path traveled using BFS
+		for(int i = 0; i < 20; i++)
+		{
+			for(int j = 0; j < 37; j++)
+			{
+				System.out.print(openMaze[i][j]);
+			}
+			System.out.println("");
+		}
+		
+		// printing out the BFS path cost for open maze
+		System.out.println("End of BFS - Cost for open maze.txt = " + bfsCost + "\n");
+		
+
+		/*
+		 * *******************************************************************************
+		 * MEDIUM MAZE BFS 
+		 * *******************************************************************************
+		 */
+		
+		// calling BFS method and setting the return value to node m
+		// passing in the current maze, the dimensions of the current maze, and the starting coordinates
+		Node m = bfs(mediumMaze, 61,23, mediumMazeStartx, mediumMazeStarty);
+		
+		// nested for loop to print out the new maze with the path traveled using BFS
+		for(int i = 0; i < 23; i++)
+		{
+			for(int j = 0; j < 61; j++)
+			{
+				System.out.print(mediumMaze[i][j]);
+			}
+			System.out.println("");
+		}
+		
+		// printing out the BFS path cost for medium maze
+		System.out.println("End of BFS - Cost for medium maze.txt = " + bfsCost + "\n");
+		
+		
+		/*
+		 * ********************************************************************************
+		 * LARGE MAZE BFS 
+		 * ********************************************************************************
+		 */
+		
+		// calling BFS method and setting the return value to node o
+		// passing in the current maze, the dimensions of the current maze, and the starting coordinates
+		Node o = bfs(largeMaze, 81, 31, largeMazeStartx, largeMazeStarty);
+		
+		// nested for loop to print out the new maze with the path traveled using BFS
+		for(int i = 0; i < 31; i++)
+		{
+			for(int j = 0; j < 81; j++)
+			{
+				System.out.print(largeMaze[i][j]);
+			}
+			System.out.println("");
+		}
+		
+		// printing out the BFS path cost for large maze
+		System.out.println("End of BFS - Cost for large maze.txt = " + bfsCost + "\n");
+		
+		//Reset all the mazes to their original values 
+		resetMazes(reader);
 		
 	
 		
@@ -108,7 +138,11 @@ public class Driver
 		 * *************************************************************************
 		 */
 		
+		// calling DFS method and setting the return value to node r
+		// passing in the current maze, the dimensions of the current maze, and the starting coordinates
 		Node r = dfs(openMaze, 37,20, openMazeStartx, openMazeStarty);
+		
+		// nested for loop to print out the new maze with the path traveled using DFS
 		for(int i = 0; i < 20; i++)
 		{
 			for(int j = 0; j < 37; j++)
@@ -117,6 +151,8 @@ public class Driver
 			}
 			System.out.println("");
 		}
+		
+		// Printing out DFS nodes expanded and Path cost for open maze
 		System.out.println("End of DFS - Nodes Expanded for open maze.txt = " + dfsNodesExpanded);
 		System.out.println("             Path Cost for open maze.txt = " + dfsPathCost + "\n");
 		
@@ -127,7 +163,11 @@ public class Driver
 		 * *********************************************************************
 		 */
 		
+		// calling DFS method and setting the return value to node p
+		// passing in the current maze, the dimensions of the current maze, and the starting coordinates
 		Node p = dfs(mediumMaze, 61,23, mediumMazeStartx, mediumMazeStarty);
+		
+		// nested for loop to print out the new maze with the path traveled using DFS
 		for(int i = 0; i < 23; i++)
 		{
 			for(int j = 0; j < 61; j++)
@@ -136,6 +176,8 @@ public class Driver
 			}
 			System.out.println("");
 		}
+		
+		// Printing out DFS nodes expanded and Path cost for medium maze
 		System.out.println("End of DFS - Nodes Expanded for medium maze.txt = " + dfsNodesExpanded );
 		System.out.println("             Path Cost for medium maze.txt = " + dfsPathCost + "\n");
 		
@@ -145,8 +187,11 @@ public class Driver
 		 * *********************************************************************
 		 */
 		
-		
+		// calling DFS method and setting the return value to node q
+		// passing in the current maze, the dimensions of the current maze, and the starting coordinates
 		Node q = dfs(largeMaze, 81, 31, largeMazeStartx, largeMazeStarty);
+		
+		// nested for loop to print out the new maze with the path traveled using DFS
 		for(int i = 0; i < 31; i++)
 		{
 			for(int j = 0; j < 81; j++)
@@ -155,8 +200,11 @@ public class Driver
 			}
 			System.out.println("");
 		}
+		
+		// Printing out DFS nodes expanded and Path cost for large maze
 		System.out.println("End of DFS - Nodes Expanded for large maze.txt = " + dfsNodesExpanded );
 		System.out.println("             Path Cost for large maze.txt = " + dfsPathCost + "\n");
+		
 		//reset all mazes after DFS
 		resetMazes(reader);
 	}
@@ -189,7 +237,7 @@ public class Driver
 		{
 			for(int j = 0; j < 61; j++)
 			{	
-				//figure out start & finish state for open maze
+				//figure out start & finish state for medium maze
 				if(mediumMaze[i][j] == 'P')//start
 				{
 					mediumMazeStartx =j;
@@ -208,7 +256,7 @@ public class Driver
 		{
 			for(int j = 0; j < 81; j++)
 			{	
-				//figure out start & finish state for open maze
+				//figure out start & finish state for large maze
 				if(largeMaze[i][j] == 'P')//start
 				{
 					largeMazeStartx =j;
@@ -224,6 +272,8 @@ public class Driver
 	}
 
 	private static void resetMazes(MazeReader reader) {
+		
+		//Reading all default maze files
 		openMaze = reader.readMaze("open maze.txt");
 		mediumMaze = reader.readMaze("medium maze.txt");
 		largeMaze = reader.readMaze("large maze.txt");
@@ -240,6 +290,7 @@ public class Driver
 		bfsCost = 0; //reset cost for new instance
 		
 		q.add(new Node(x, y, null));
+		
 
         while(!q.isEmpty()) {
         	
