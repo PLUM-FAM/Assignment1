@@ -310,7 +310,7 @@ public class Driver
             if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) 
             {
                 Node nextP = new Node(p.getX()+1,p.getY(), p); //east
-                s.add(nextP);
+                s.push(nextP);
                 bfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
                     System.out.println("Exit is reached!");
@@ -321,7 +321,7 @@ public class Driver
 
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) {
                 Node nextP = new Node(p.getX()-1,p.getY(), p); //west
-                s.add(nextP);
+                s.push(nextP);
                 dfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
@@ -332,7 +332,7 @@ public class Driver
 
             if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) {
                 Node nextP = new Node(p.getX(),p.getY()+1, p); //south
-                s.add(nextP);
+                s.push(nextP);
                 dfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     return nextP;//exit is reached
@@ -342,7 +342,7 @@ public class Driver
 
              if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) {
                 Node nextP = new Node(p.getX(),p.getY()-1, p); //north
-                s.add(nextP);
+                s.push(nextP);
                 dfsCost++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
