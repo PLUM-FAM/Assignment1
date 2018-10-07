@@ -306,10 +306,7 @@ public class Driver
                 Node nextP = new Node(p.getX()+1,p.getY(), p); //east
                 q.add(nextP);
                 bfsCost++;
-                if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
-                    System.out.println("Exit is reached!");
-                    return nextP;
-                }
+                goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
             }
 
@@ -317,10 +314,7 @@ public class Driver
                 Node nextP = new Node(p.getX()-1,p.getY(), p); //west
                 q.add(nextP);
                 bfsCost++;
-                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
-                    System.out.println("Exit is reached!");
-                    return nextP;
-                }
+                goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
             }
 
@@ -328,10 +322,7 @@ public class Driver
                 Node nextP = new Node(p.getX(),p.getY()+1, p); //south
                 q.add(nextP);
                 bfsCost++;
-                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
-                	System.out.println("Exit is reached!");
-                	return nextP;//exit is reached
-                }
+                goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
             }
 
@@ -339,16 +330,25 @@ public class Driver
                 Node nextP = new Node(p.getX(),p.getY()-1, p); //north
                 q.add(nextP);
                 bfsCost++;
-                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
-                    System.out.println("Exit is reached!");
-                    return nextP;
-                }
+                goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
             }
 
         }
         return null;
 	}
+
+
+
+
+	public static Node goalCheck(char[][] m, Node nextP) {
+		if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
+			System.out.println("Exit is reached!");
+			return nextP;//exit is reached
+		}
+		return null;
+	}
+	
 	
 	public static Node dfs(char[][] m, int mxbound, int mybound, int x, int y)
 	{
@@ -367,10 +367,7 @@ public class Driver
                 Node nextP = new Node(p.getX()+1,p.getY(), p); //east
                 s.add(nextP);
                 dfsNodesExpanded++;
-                if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
-                    System.out.println("Exit is reached!");
-                    return nextP;
-                }
+                goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
             }
 
@@ -378,10 +375,7 @@ public class Driver
                 Node nextP = new Node(p.getX()-1,p.getY(), p); //west
                 s.add(nextP);
                 dfsNodesExpanded++;
-                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
-                    System.out.println("Exit is reached!");
-                    return nextP;
-                }
+                goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
             }
 
@@ -389,10 +383,7 @@ public class Driver
                 Node nextP = new Node(p.getX(),p.getY()+1, p); //south
                 s.add(nextP);
                 dfsNodesExpanded++;
-                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
-                	System.out.println("Exit is reached!");
-                    return nextP;//exit is reached
-                }
+                goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
             }
 
@@ -400,10 +391,7 @@ public class Driver
                 Node nextP = new Node(p.getX(),p.getY()-1, p); //north
                 s.add(nextP);
                 dfsNodesExpanded++;
-                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
-                    System.out.println("Exit is reached!");
-                    return nextP;
-                }
+                goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
             }
         }
