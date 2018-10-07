@@ -352,8 +352,7 @@ public class Driver
         while(!q.isEmpty()) {
         	
             Node p = q.remove(); //p is the current node/point that we are looking at. the frontier of p includes valid nodes to the east, west, south, and north of p.
-
-            
+            m[p.getY()][p.getX()] = '.';
             /* 
              * this group of conditional statements checks the frontier in this order (east,west,south,north)
              * for valid nodes to add to the queue.
@@ -367,7 +366,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.'; //mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e'; //mark where we have been.
             }
 
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) { //west
@@ -378,7 +377,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
             if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) { //south
@@ -389,7 +388,7 @@ public class Driver
                 	System.out.println("Exit is reached!");
                 	return nextP;//exit is reached
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
              if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) { //north
@@ -400,7 +399,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
         }
@@ -422,7 +421,7 @@ public class Driver
         while(!s.isEmpty()) {
         	
             Node p = s.pop(); //the current node (or point) that we are looking at is popped off of the stack 
-            
+            m[p.getY()][p.getX()] = '.';
             dfsPathCost++; //every time we move to another node the path cost is increased by 1.
 
             /* 
@@ -439,7 +438,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) //west
             {
@@ -451,7 +450,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
             if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) //south
@@ -464,7 +463,7 @@ public class Driver
                 	System.out.println("Exit is reached!");
                     return nextP;//exit is reached
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
 
@@ -477,7 +476,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
         }
         return null; //if no exit/goal state is found.
@@ -512,6 +511,7 @@ public class Driver
 			}
 			//remove p from arraylist.
 			a.remove(p);
+			m[p.getY()][p.getX()] = '.';
 			greedyPathCost++;
 			
 			//adding frontier of p (current node)
@@ -524,7 +524,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) //west
             {
@@ -536,7 +536,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
             if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) //south
@@ -549,7 +549,7 @@ public class Driver
                 	System.out.println("Exit is reached!");
                     return nextP;//exit is reached
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
 
@@ -562,7 +562,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
        }
 		
@@ -595,6 +595,7 @@ public class Driver
 			}
 			//remove p from arraylist.
 			w.remove(p);
+			m[p.getY()][p.getX()] = '.';
 			astarPathCost++;
 			
 			//adding frontier of p (current node)
@@ -607,7 +608,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) //west
             {
@@ -619,7 +620,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
             if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) //south
@@ -632,7 +633,7 @@ public class Driver
                 	System.out.println("Exit is reached!");
                     return nextP;//exit is reached
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
 
              if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) //north
@@ -644,7 +645,7 @@ public class Driver
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
-                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+                m[nextP.getY()][nextP.getX()] = 'e';//mark where we have been.
             }
        }
 		
