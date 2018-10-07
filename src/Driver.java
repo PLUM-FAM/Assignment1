@@ -304,7 +304,6 @@ public class Driver
                 goalCheck(m, nextP);
                 m[nextP.getY()][nextP.getX()] = '.';
            
-                m[nextP.getY()][nextP.getX()] = '.'; //mark where we have been.
             }
 
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) { //west
