@@ -181,7 +181,7 @@ public class Driver
 		
 		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
 		System.out.println("End of OPEN GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
-		System.out.println("             Path Cost for open maze.txt = " + astarPathCost + "\n");		
+		System.out.println("                   Path Cost for open maze.txt = " + astarPathCost + "\n");		
 		
 		/*
 		 * *********************************************************************
@@ -195,7 +195,7 @@ public class Driver
 		
 		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
 		System.out.println("End of MEDIUM GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
-		System.out.println("             Path Cost for medium maze.txt = " + astarPathCost + "\n");
+		System.out.println("           		     Path Cost for medium maze.txt = " + astarPathCost + "\n");
 		
 		/*
 		 * *********************************************************************
@@ -209,7 +209,7 @@ public class Driver
 		
 		// Printing out DFS nodes expanded and Path cost for large maze
 		System.out.println("End of LARGE GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
-		System.out.println("             Path Cost for large maze.txt = " + astarPathCost + "\n");
+		System.out.println("             		ePath Cost for large maze.txt = " + astarPathCost + "\n");
 		//reset all mazes after GREEDY FIRST
 		resetMazes(reader);
 		
