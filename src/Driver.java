@@ -10,8 +10,11 @@ public class Driver
 	// Stack created for DFS
 	public static Stack<Node> s = new Stack<>();
 	
-	//Array List for Astar search.
+	//Array List for greedy search
 	public static ArrayList<NodeH> a = new ArrayList<NodeH>();
+	
+	//Array List for astar search
+	public static ArrayList<NodeH> w = new ArrayList<NodeH>();
 	
 	//Start and finish coordinate variables for open maze
 	public static int openMazeStartx;
@@ -214,6 +217,49 @@ public class Driver
 		System.out.println("End of LARGE GREEDY FIRST - Nodes Expanded for open maze.txt = " + greedyNodesExpanded );
 		System.out.println("             Path Cost for large maze.txt = " + greedyPathCost + "\n");
 	
+		
+		//reset all mazes after GREEDY FIRST
+		resetMazes(reader);
+		
+		
+		/*
+		 * *********************************************************************
+		 * OPEN MAZE ASTAR
+		 * *********************************************************************
+		 */
+		NodeH go = astar(openMaze, 37,20, openMazeStartx, openMazeStarty, openMazeFinishx, openMazeFinishy);
+		printOpenMaze();
+		
+		// Printing out GREEDY FIRST nodes expanded and Path cost for open maze
+
+		System.out.println("End of OPEN ASTAR Nodes Expanded for open maze.txt = " + astarNodesExpanded );
+		System.out.println("             Path Cost for open maze.txt = " + astarPathCost + "\n");		
+		
+		/*
+		 * *********************************************************************
+		 * OPEN MAZE ASTAR
+		 * *********************************************************************
+		 */
+		NodeH gm = astar(mediumMaze, 61,23, mediumMazeStartx, mediumMazeStarty, mediumMazeFinishx, mediumMazeFinishy);
+		printMediumMaze();
+		
+		// Printing out GREEDY FIRST nodes expanded and Path cost for medium maze
+
+		System.out.println("End of OPEN ASTAR Nodes Expanded for medium maze.txt = " + astarNodesExpanded );
+		System.out.println("             Path Cost for open maze.txt = " + astarPathCost + "\n");		
+		
+		/*
+		 * *********************************************************************
+		 * OPEN MAZE ASTAR
+		 * *********************************************************************
+		 */
+		NodeH gl = astar(largeMaze, 81,31, largeMazeStartx, largeMazeStarty, largeMazeFinishx, largeMazeFinishy);
+		printLargeMaze();
+		
+		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
+
+		System.out.println("End of OPEN ASTAR Nodes Expanded for large maze.txt = " + astarNodesExpanded );
+		System.out.println("             Path Cost for open maze.txt = " + astarPathCost + "\n");		
 		
 	}
 
@@ -468,11 +514,7 @@ public class Driver
 			a.remove(p);
 			greedyPathCost++;
 			
-			//TODO
-			//add frontier of p to a
-			//also need to include a goal check (when frontier is added).
-			//are goal checks in the right spot for a*? will this affect nodes expanded vs path cost.
-			
+			//adding frontier of p (current node)
 			if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) //east
             {
                 NodeH nextP = new NodeH(p.getX()+1,p.getY(), findDistance(p.getX()+1,p.getY(), fX,fY)); 
@@ -527,6 +569,89 @@ public class Driver
 		
 		return null;
 	}
+	
+	
+	public static NodeH astar(char[][] m, int mxbound, int mybound, int sX, int sY, int fX, int fY)
+	{
+		astarNodesExpanded = 0; //reset costs for new instance
+		astarPathCost = 0;
+		w = new ArrayList<NodeH>();
+		
+		//w is the instance of arraylist
+		NodeH p = new NodeH(sX,sY,999999999);
+		w.add(p);
+		
+		while(a.isEmpty() != true)
+		{
+		
+			//search arraylist for node with lowest h value		
+			p = new NodeH(sX,sY,999999999); //this line resets p so that if the old p is still the smallest, the program doesnt stay on that node forever (infinite loop)
+			for (NodeH n : w)
+			{
+				if(n.getH() < p.getH()) 
+				{
+					p = n;
+				}
+			}
+			//remove p from arraylist.
+			w.remove(p);
+			astarPathCost++;
+			
+			//adding frontier of p (current node)
+			if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) //east
+            {
+                NodeH nextP = new NodeH(p.getX()+1,p.getY(), findAstarHeuristic(p.getX()+1,p.getY(), fX,fY,sX,sY)); 
+                w.add(nextP);
+                astarNodesExpanded++;
+                if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
+                    System.out.println("Exit is reached!");
+                    return nextP;
+                }
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+            }
+            if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) //west
+            {
+                NodeH nextP = new NodeH(p.getX()-1,p.getY(), findAstarHeuristic(p.getX()-1,p.getY(), fX, fY,sX,sY)); 
+                w.add(nextP);
+                astarNodesExpanded++;
+
+                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
+                    System.out.println("Exit is reached!");
+                    return nextP;
+                }
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+            }
+
+            if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) //south
+            {
+                NodeH nextP = new NodeH(p.getX(),p.getY()+1, findAstarHeuristic(p.getX(),p.getY()+1, fX, fY,sX,sY)); 
+                w.add(nextP);
+                astarNodesExpanded++;
+
+                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
+                	System.out.println("Exit is reached!");
+                    return nextP;//exit is reached
+                }
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+            }
+
+             if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) //north
+             {
+                NodeH nextP = new NodeH(p.getX(),p.getY()-1, findAstarHeuristic(p.getX(),p.getY()-1, fX, fY,sX,sY)); 
+                w.add(nextP);
+                astarNodesExpanded++;
+                if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
+                    System.out.println("Exit is reached!");
+                    return nextP;
+                }
+                m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
+            }
+       }
+		
+		return null;
+	}
+	
+	
 	
 	/*
 	 * finding the cardinal distance to the finish state using the distance formula & the inputted x and y coords to the finish state x and y coords.
