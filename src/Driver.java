@@ -174,14 +174,15 @@ public class Driver
 		 * OPEN MAZE GREEDY FIRST 
 		 * *********************************************************************
 		 */
-		NodeH l = greedyFirst(openMaze, 37,20, openMazeStartx, openMazeStarty, openMazeFinishx, openMazeFinishy);
+      NodeH l = greedyFirst(openMaze, 37,20, openMazeStartx, openMazeStarty, openMazeFinishx, openMazeFinishy);
 		
 		// nested for loop to print out the new maze with the path traveled using greedy first search
 		printOpenMaze();
 		
 		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
-		System.out.println("End of OPEN GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
-		System.out.println("                   Path Cost for open maze.txt = " + astarPathCost + "\n");		
+
+		System.out.println("End of OPEN GREEDY FIRST - Nodes Expanded for open maze.txt = " + greedyNodesExpanded );
+		System.out.println("             Path Cost for open maze.txt = " + greedyPathCost + "\n");		
 		
 		/*
 		 * *********************************************************************
@@ -193,9 +194,10 @@ public class Driver
 		// nested for loop to print out the new maze with the path traveled using greedy first search
 		printMediumMaze();
 		
-		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
-		System.out.println("End of MEDIUM GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
-		System.out.println("           		     Path Cost for medium maze.txt = " + astarPathCost + "\n");
+		// Printing out GREEDY FIRST nodes expanded and Path cost for medium maze
+		System.out.println("End of MEDIUM GREEDY FIRST - Nodes Expanded for open maze.txt = " + greedyNodesExpanded );
+		System.out.println("             Path Cost for medium maze.txt = " + greedyPathCost + "\n");
+		
 		
 		/*
 		 * *********************************************************************
@@ -207,12 +209,11 @@ public class Driver
 		// nested for loop to print out the new maze with the path traveled using greedy first search
 		printLargeMaze();
 		
-		// Printing out DFS nodes expanded and Path cost for large maze
-		System.out.println("End of LARGE GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
-		System.out.println("             		ePath Cost for large maze.txt = " + astarPathCost + "\n");
-		//reset all mazes after GREEDY FIRST
-		resetMazes(reader);
-		
+
+		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
+		System.out.println("End of LARGE GREEDY FIRST - Nodes Expanded for open maze.txt = " + greedyNodesExpanded );
+		System.out.println("             Path Cost for large maze.txt = " + greedyPathCost + "\n");
+	
 		
 	}
 
@@ -443,6 +444,10 @@ public class Driver
 	
 	public static NodeH greedyFirst(char[][] m, int mxbound, int mybound, int x, int y, int fX, int fY)
 	{
+		greedyNodesExpanded = 0; //reset cost for new instance
+		greedyPathCost = 0;
+		a = new ArrayList<NodeH>();
+		
 		//a is the instance of arraylist
 		NodeH p = new NodeH(x,y,999999999);
 		a.add(p);
@@ -461,7 +466,7 @@ public class Driver
 			}
 			//remove p from arraylist.
 			a.remove(p);
-			astarPathCost++;
+			greedyPathCost++;
 			
 			//TODO
 			//add frontier of p to a
@@ -472,7 +477,7 @@ public class Driver
             {
                 NodeH nextP = new NodeH(p.getX()+1,p.getY(), findDistance(p.getX()+1,p.getY(), fX,fY)); 
                 a.add(nextP);
-                astarNodesExpanded++;
+                greedyNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
                     System.out.println("Exit is reached!");
                     return nextP;
@@ -483,7 +488,7 @@ public class Driver
             {
                 NodeH nextP = new NodeH(p.getX()-1,p.getY(), findDistance(p.getX()-1,p.getY(), fX, fY)); 
                 a.add(nextP);
-                astarNodesExpanded++;
+                greedyNodesExpanded++;
 
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
@@ -496,7 +501,7 @@ public class Driver
             {
                 NodeH nextP = new NodeH(p.getX(),p.getY()+1, findDistance(p.getX(),p.getY()+1, fX, fY)); 
                 a.add(nextP);
-                astarNodesExpanded++;
+                greedyNodesExpanded++;
 
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                 	System.out.println("Exit is reached!");
@@ -510,14 +515,14 @@ public class Driver
              {
                 NodeH nextP = new NodeH(p.getX(),p.getY()-1, findDistance(p.getX(),p.getY()-1, fX, fY)); 
                 a.add(nextP);
-                astarNodesExpanded++;
+                greedyNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
                     System.out.println("Exit is reached!");
                     return nextP;
                 }
                 m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
-		}
+       }
 		
 		
 		return null;
