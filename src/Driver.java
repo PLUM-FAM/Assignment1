@@ -158,13 +158,17 @@ public class Driver
 		 * OPEN MAZE GREEDY FIRST 
 		 * *********************************************************************
 		 */
-		
 		NodeH l = greedyFirst(openMaze, 37,20, openMazeStartx, openMazeStarty, openMazeFinishx, openMazeFinishy);
+		
+		NodeH l3 = greedyFirst(openMaze, 37,20, openMazeStartx, openMazeStarty, openMazeFinishx, openMazeFinishy);
 		// nested for loop to print out the new maze with the path traveled using greedy first search
 		printOpenMaze();
 		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
 		printStats("open", "Greedy", greedyNodesExpanded, greedyPathCost);
 		
+
+		System.out.println("End of OPEN GREEDY FIRST - Nodes Expanded for open maze.txt = " + greedyNodesExpanded );
+		System.out.println("             Path Cost for open maze.txt = " + greedyPathCost + "\n");		
 		
 		/*
 		 * *********************************************************************
@@ -192,6 +196,9 @@ public class Driver
 		printStats("large", "Greedy", greedyNodesExpanded, greedyPathCost);
 		//reset all mazes after GREEDY FIRST
 		resetMazes(reader);
+		
+
+		
 	}
 
 
@@ -427,6 +434,10 @@ public class Driver
 	
 	public static NodeH greedyFirst(char[][] m, int mxbound, int mybound, int x, int y, int fX, int fY)
 	{
+		greedyNodesExpanded = 0; //reset cost for new instance
+		greedyPathCost = 0;
+		a = new ArrayList<NodeH>();
+		
 		//a is the instance of arraylist
 		NodeH p = new NodeH(x,y,999999999);
 		a.add(p);
@@ -501,7 +512,7 @@ public class Driver
                 }
                 m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
-		}
+       }
 		
 		
 		return null;
