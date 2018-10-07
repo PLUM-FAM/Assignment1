@@ -43,8 +43,9 @@ public class Driver
 	static int dfsNodesExpanded = 0;
 	static int dfsPathCost = 0;
 	
-	// GREEDY path cost counter variable
-	static int greedyCost = 0;
+	// GREEDY path cost & nodes expanded counter
+	static int greedyPathCost = 0;
+	static int greedyNodesExpanded = 0;
 	
 	//ASTAR path cost counter variable
 	static int astarPathCost = 0;
@@ -170,19 +171,46 @@ public class Driver
 		
 		/*
 		 * *********************************************************************
-		 * OPEN MAZE ASTAR 
+		 * OPEN MAZE GREEDY FIRST 
 		 * *********************************************************************
 		 */
-		NodeH l = astar(openMaze, 37,20, openMazeStartx, openMazeStarty, openMazeFinishx, openMazeFinishy);
+		NodeH l = greedyFirst(openMaze, 37,20, openMazeStartx, openMazeStarty, openMazeFinishx, openMazeFinishy);
 		
-		// nested for loop to print out the new maze with the path traveled using BFS
+		// nested for loop to print out the new maze with the path traveled using greedy first search
 		printOpenMaze();
 		
-		// Printing out DFS nodes expanded and Path cost for large maze
-		System.out.println("End of ASTAR - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
+		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
+		System.out.println("End of OPEN GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
 		System.out.println("             Path Cost for open maze.txt = " + astarPathCost + "\n");		
 		
-		//reset all mazes after astar
+		/*
+		 * *********************************************************************
+		 * MEDIUM MAZE GREEDY FIRST 
+		 * *********************************************************************
+		 */
+		NodeH l1 = greedyFirst(mediumMaze, 61,23, mediumMazeStartx, mediumMazeStarty, mediumMazeFinishx, mediumMazeFinishy);
+		
+		// nested for loop to print out the new maze with the path traveled using greedy first search
+		printMediumMaze();
+		
+		// Printing out GREEDY FIRST nodes expanded and Path cost for large maze
+		System.out.println("End of MEDIUM GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
+		System.out.println("             Path Cost for medium maze.txt = " + astarPathCost + "\n");
+		
+		/*
+		 * *********************************************************************
+		 * LARGE MAZE GREEDY FIRST 
+		 * *********************************************************************
+		 */
+		NodeH l2 = greedyFirst(largeMaze, 81,31, largeMazeStartx, largeMazeStarty, largeMazeFinishx, largeMazeFinishy);
+		
+		// nested for loop to print out the new maze with the path traveled using greedy first search
+		printLargeMaze();
+		
+		// Printing out DFS nodes expanded and Path cost for large maze
+		System.out.println("End of LARGE GREEDY FIRST - Nodes Expanded for open maze.txt = " + astarNodesExpanded );
+		System.out.println("             Path Cost for large maze.txt = " + astarPathCost + "\n");
+		//reset all mazes after GREEDY FIRST
 		resetMazes(reader);
 		
 		
@@ -413,7 +441,7 @@ public class Driver
 
 
 	
-	public static NodeH astar(char[][] m, int mxbound, int mybound, int x, int y, int fX, int fY)
+	public static NodeH greedyFirst(char[][] m, int mxbound, int mybound, int x, int y, int fX, int fY)
 	{
 		//a is the instance of arraylist
 		NodeH p = new NodeH(x,y,999999999);
@@ -432,40 +460,19 @@ public class Driver
 				}
 			}
 			//remove p from arraylist.
-			System.out.println("old arraylist");
-
-			for (NodeH n : a)
-			{
-				System.out.println(n.getX() + "," + n.getY() + " d: " + n.getH());
-			}
 			a.remove(p);
-			
-			System.out.println(p.getX() + "," + p.getY() + " was removed");
-			System.out.println("new arraylist");
-
-			for (NodeH n : a)
-			{
-				System.out.println(n.getX() + "," + n.getY() + " d: " + n.getH());
-			}
-			
-			
-			
-				
 			astarPathCost++;
 			
-			
+			//TODO
 			//add frontier of p to a
 			//also need to include a goal check (when frontier is added).
 			//are goal checks in the right spot for a*? will this affect nodes expanded vs path cost.
 			
-			
 			if(isFree(m, mxbound, mybound, p.getX()+1,p.getY())) //east
             {
                 NodeH nextP = new NodeH(p.getX()+1,p.getY(), findDistance(p.getX()+1,p.getY(), fX,fY)); 
-                System.out.println("Distance for " + nextP.getX() + "," + nextP.getY() + " is: " + nextP.getH());
                 a.add(nextP);
                 astarNodesExpanded++;
-
                 if (m[nextP.getY()][nextP.getX()] == '*') { //goal test
                     System.out.println("Exit is reached!");
                     return nextP;
@@ -475,8 +482,6 @@ public class Driver
             if(isFree(m, mxbound,mybound, p.getX()-1,p.getY())) //west
             {
                 NodeH nextP = new NodeH(p.getX()-1,p.getY(), findDistance(p.getX()-1,p.getY(), fX, fY)); 
-                System.out.println("Distance for " + nextP.getX() + "," + nextP.getY() + " is: " + nextP.getH());
-
                 a.add(nextP);
                 astarNodesExpanded++;
 
@@ -490,8 +495,6 @@ public class Driver
             if(isFree(m,mxbound,mybound, p.getX(),p.getY()+1)) //south
             {
                 NodeH nextP = new NodeH(p.getX(),p.getY()+1, findDistance(p.getX(),p.getY()+1, fX, fY)); 
-                System.out.println("Distance for " + nextP.getX() + "," + nextP.getY() + " is: " + nextP.getH());
-
                 a.add(nextP);
                 astarNodesExpanded++;
 
@@ -506,8 +509,6 @@ public class Driver
              if(isFree(m,mxbound,mybound, p.getX(),p.getY()-1)) //north
              {
                 NodeH nextP = new NodeH(p.getX(),p.getY()-1, findDistance(p.getX(),p.getY()-1, fX, fY)); 
-                System.out.println("Distance for " + nextP.getX() + "," + nextP.getY() + " is: " + nextP.getH());
-
                 a.add(nextP);
                 astarNodesExpanded++;
                 if (m[nextP.getY()][nextP.getX()] == '*') {//goal test
@@ -516,8 +517,6 @@ public class Driver
                 }
                 m[nextP.getY()][nextP.getX()] = '.';//mark where we have been.
             }
-             printOpenMaze();
-             System.out.println();
 		}
 		
 		
@@ -527,6 +526,11 @@ public class Driver
 	/*
 	 * finding the cardinal distance to the finish state using the distance formula & the inputted x and y coords to the finish state x and y coords.
 	 * this methods is used for heuristics
+	 * distance = sqrt((x2-x1)^2 + (y2-y1)^2)
+	 * cX = current node x coord
+ 	 * cY = current node y coord
+ 	 * fX = finish node x coord
+ 	 * fY = finish node y coord
 	 */
 	public static double findDistance(int cX, int cY, int fX, int fY)
 	{
@@ -537,6 +541,28 @@ public class Driver
 		double d = Math.sqrt(x2+y2);	
 		return d;
 		
+	}
+	
+	/*
+	 * finding the astar heuristic by using the following:
+	 * f(n)=g(n)+h(n)
+	 * where n is the next node on the path, g(n) is the cost of the path from the start node to n,
+ 	 * and h(n) is a heuristic function that estimates the cost of the cheapest path from n to the goal. 
+ 	 * 
+ 	 * Calls our findDistance function to do the actual math.
+ 	 * cX = current node x coord
+ 	 * cY = current node y coord
+ 	 * fX = finish node x coord
+ 	 * fY = finish node y coord
+ 	 * sX = start node x coord
+ 	 * sY = start node y coord
+	 */
+	public static double findAstarHeuristic(int cX, int cY, int fX, int fY, int sX, int sY)
+	{
+		double dToS = findDistance(cX,cY,sX,sY);
+		double dToF = findDistance(cX, cY, fX, fY);
+		return dToF + dToS;
+				
 	}
 	
 	private static void printOpenMaze() {
