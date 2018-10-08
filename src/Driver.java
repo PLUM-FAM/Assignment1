@@ -667,9 +667,17 @@ public class Driver
 	{
 		int x = fX-cX;
 		int y = fY-cY;
+		
+		//Euclidian Distance
 		double x2 = Math.pow(x, 2);
 		double y2 = Math.pow(y, 2);
-		double d = Math.sqrt(x2+y2);	
+		double d = Math.sqrt(x2+y2);
+		
+		//Manhattan Distance
+//		double x2 = Math.abs(x);
+//		double y2 = Math.abs(y);
+//		double d = x2+y2;	
+		
 		return d;
 		
 	}
