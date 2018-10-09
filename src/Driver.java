@@ -655,9 +655,9 @@ public class Driver
 	
 	
 	/*
-	 * finding the cardinal distance to the finish state using the distance formula & the inputted x and y coords to the finish state x and y coords.
+	 * finding the Manhattan distance to the finish state using the distance formula & the inputted x and y coords to the finish state x and y coords.
 	 * this methods is used for heuristics
-	 * distance = sqrt((x2-x1)^2 + (y2-y1)^2)
+	 * Manhattan distance = |x1 - x2| + |y1 - y2|
 	 * cX = current node x coord
  	 * cY = current node y coord
  	 * fX = finish node x coord
@@ -668,15 +668,10 @@ public class Driver
 		int x = fX-cX;
 		int y = fY-cY;
 		
-		//Euclidian Distance
-		double x2 = Math.pow(x, 2);
-		double y2 = Math.pow(y, 2);
-		double d = Math.sqrt(x2+y2);
-		
 		//Manhattan Distance
-//		double x2 = Math.abs(x);
-//		double y2 = Math.abs(y);
-//		double d = x2+y2;	
+		double x2 = Math.abs(x);
+		double y2 = Math.abs(y);
+		double d = x2+y2;	
 		
 		return d;
 		
@@ -696,11 +691,12 @@ public class Driver
  	 * sX = start node x coord
  	 * sY = start node y coord
 	 */
-	public static double findAstarHeuristic(int cX, int cY, int fX, int fY, int sX, int sY)
+	
+	public static double findAstarHeuristic(int cX, int cY, int fX, int fY , int sX, int sY)
 	{
 		double dToS = findDistance(cX,cY,sX,sY);
 		double dToF = findDistance(cX, cY, fX, fY);
-		return dToF + dToS;
+		return dToF - dToS;
 				
 	}
 	
